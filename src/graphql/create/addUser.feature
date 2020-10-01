@@ -4,15 +4,23 @@ Background:
 * url "https://api.spacex.land/graphql/"
 * def mutation = read('classpath:src/graphql/create/addUser.graphql')
 
+#Helpers
+* def randomHelper = call read('classpath:src/testdata/utils/randomhelper.js')
+
+@createNewUser
 Scenario:Add New Users With Valid Input
+* def guid = randomHelper.generateRandomGUID()
+* def userName = randomHelper.generateRandomString(10)
+* def rocketName = randomHelper.generateRandomString(10)
+
 * def variables =
 """
 {
   objects: [
     {
-      id: '11cd2db5-3e6e-4363-b8e5-afd2a67a5333',
-      name: 'Neil Armstrong',
-      rocket: 'PSLV',
+      id: '#(guid)',
+      name: '#(userName)',
+      rocket: '#(rocketName)',
       twitter: '@trulyIndian'
       
     }
@@ -22,6 +30,4 @@ Scenario:Add New Users With Valid Input
 Given request {query:'#(mutation)', variables:'#(variables)'}
 When method POST
 Then status 200
-* match $.data.insert_users == null
-
-#* match response.errors[0].message contains "Uniqueness violation. duplicate key value violates unique constraint"
+And match $.data.insert_users.returning[0].id == guid
