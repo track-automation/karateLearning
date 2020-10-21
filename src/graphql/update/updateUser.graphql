@@ -1,0 +1,8 @@
+mutation update_users($set:users_set_input,$where:users_bool_exp!){
+  update_users(_set:$set,where:$where){
+    returning{
+      id
+      name
+    }
+  }
+}

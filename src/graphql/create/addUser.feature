@@ -31,3 +31,4 @@ Given request {query:'#(mutation)', variables:'#(variables)'}
 When method POST
 Then status 200
 And match $.data.insert_users.returning[0].id == guid
+* def user = response.data.insert_users.returning
