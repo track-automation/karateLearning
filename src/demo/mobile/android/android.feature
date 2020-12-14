@@ -11,3 +11,4 @@ Feature: android test
     Then match driver.text('#com.bs.droidaction:id/nameTextView') == 'Karate DSL'
     And driver.click('#com.bs.droidaction:id/showTextCheckBox')
     And match driver.text('#com.bs.droidaction:id/nameTextView') == ''
+
